@@ -1,0 +1,29 @@
+# Vendored fork of the pub.dev package `video_player_android` (2.9.7). Its
+# generated pigeon output and upstream Dart source predate — and do not follow —
+# this app's zero-warnings lint profile. Analysing it under the root
+# `analysis_options.yaml` surfaces style lints the fork does not own.
+#
+# The three intentional fork diffs are all Java (HttpVideoAsset,
+# TextureVideoPlayer, ExoPlayerEventListener) and are not covered by Dart lints.
+# So this file only silences the inherited style noise; it adds no rules.
+analyzer:
+  errors:
+    avoid_positional_boolean_parameters: ignore
+    always_put_required_named_parameters_first: ignore
+    todo: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+    # Pigeon SCHEMA files. They import `package:pigeon`, a dev-only dependency
+    # of THIS package that the app's root `pub get` never resolves. On a machine
+    # that has once run `pub get` in here, a leftover `.dart_tool` makes the
+    # import resolve and analysis is clean; on a fresh checkout it is not, and
+    # CI fails with 7 `uri_does_not_exist` / `undefined_annotation` errors that
+    # reproduce nowhere locally. They are codegen INPUTS for the pigeon tool —
+    # the committed `lib/src/messages.g.dart` is what the app actually compiles.
+    - pigeons/**
